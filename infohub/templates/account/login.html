@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load socialaccount %}
+
+{% block title %}Вход - InfoHub{% endblock %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+  <div class="card p-4 shadow-lg" style="max-width: 400px; width: 100%; background-color: #222; color: white; border: 1px solid #444; border-radius: 10px;">
+    <h2 class="text-center mb-3">Вход в InfoHub</h2>
+
+    <!-- Основная форма входа -->
+    <form method="post">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label class="form-label">Имя пользователя</label>
+        {{ form.login }}
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Пароль</label>
+        {{ form.password }}
+      </div>
+
+      <button type="submit" class="btn btn-orange w-100">Войти</button>
+    </form>
+
+    <!-- Ссылки на регистрацию и сброс пароля -->
+    <div class="mt-3 text-center">
+      <p>Нет аккаунта? <a href="{% url 'account_signup' %}" style="color: #ff9900;">Регистрация</a></p>
+      <p><a href="{% url 'account_reset_password' %}" style="color: #ff9900;">Забыли пароль?</a></p>
+    </div>
+
+    <!-- Социальные кнопки -->
+    <hr class="my-4">
+    <div class="text-center mb-2">
+      <p>Или войдите через социальные сети:</p>
+    </div>
+
+    <div class="d-grid gap-2">
+      <!-- Google login -->
+      <a href="{% provider_login_url 'google' %}" class="btn btn-light btn-outline-dark d-flex align-items-center justify-content-center">
+        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/google.svg" width="20" height="20" style="margin-right: 8px;" alt="Google">
+        Войти через Google
+      </a>
+
+      <!-- Telegram login -->
+
+        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/telegram.svg" width="20" height="20" style="margin-right: 8px;" alt="Telegram">
+        Войти через Telegram
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

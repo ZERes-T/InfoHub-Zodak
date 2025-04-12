@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+  <h2 class="mb-4 text-center">Профиль пользователя</h2>
+
+  <!-- Вкладки -->
+  <ul class="nav nav-tabs mb-4" id="profileTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
+              role="tab" aria-controls="profile" aria-selected="true">
+        Профиль
+      </button>
+    </li>
+    <!-- Доп. вкладки можно добавить тут -->
+  </ul>
+
+  <div class="tab-content" id="profileTabContent">
+    <!-- Профиль -->
+    <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+      <div class="card p-4 mb-4 shadow-sm">
+        <h5>Добро пожаловать, {{ user.username }}!</h5>
+        <p>Email: {{ user.email }}</p>
+        <p>Дата регистрации: {{ user.date_joined|date:"d.m.Y H:i" }}</p>
+      </div>
+
+      <h5 class="mb-3">Загруженные игры:</h5>
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+          <thead class="table-light">
+            <tr>
+              <th>#</th>
+              <th>Название</th>
+              <th>Дата загрузки</th>
+              <th>Оценка</th>
+              <th>Действия</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for game in user_games %}
+              <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ game.title }}</td>
+                <td>{{ game.upload_date|date:"d.m.Y" }}</td>
+                <td>{{ game.rating|default:"—" }}</td>
+                <td>
+                  <a href="{% url 'edit_game' game.id %}" class="btn btn-sm btn-outline-primary">Редактировать</a>
+                  <a href="{% url 'delete_game' game.id %}" class="btn btn-sm btn-outline-danger">Удалить</a>
+                </td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="5" class="text-center">Вы ещё не добавили ни одной игры.</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

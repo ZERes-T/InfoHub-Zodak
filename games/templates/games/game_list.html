@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Игры и приложения - InfoHub{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <h2 class="mb-4 text-center">🎮 Каталог игр</h2>
+
+  <form method="get" class="row g-3 mb-4 align-items-end">
+    <div class="col-md-6">
+      <input type="text" name="q" class="form-control" placeholder="Поиск по названию или описанию" value="{{ request.GET.q }}">
+    </div>
+    <div class="col-md-4">
+      <select name="category" class="form-select">
+        <option value="">Все категории</option>
+        {% for cat in categories %}
+          <option value="{{ cat }}" {% if request.GET.category == cat %}selected{% endif %}>{{ cat }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-2">
+      <button type="submit" class="btn btn-orange w-100">🔍 Фильтр</button>
+    </div>
+  </form>
+
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for game in games %}
+    <div class="col">
+      <div class="card h-100 shadow-sm bg-dark text-white">
+        {% if game.cover %}
+          <img src="{{ game.cover.url }}" class="card-img-top" style="height: 200px; object-fit: cover;" alt="{{ game.title }}">
+        {% endif %}
+        <div class="card-body">
+          <h5 class="card-title">{{ game.title }}</h5>
+          <p class="card-text">{{ game.description|truncatechars:100 }}</p>
+          <a href="{% url 'game_detail' game.id %}" class="btn btn-outline-light">Подробнее</a>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+      <p class="text-muted">😕 Нет доступных игр по вашему запросу.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

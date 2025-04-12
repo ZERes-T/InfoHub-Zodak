@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Главная - InfoHub{% endblock %}
+
+{% block content %}
+    <h2>Популярные игры и приложения</h2>
+    <div class="row">
+        {% for game in games %}
+            <div class="col-md-3">
+                <div class="card">
+                    {% if game.cover %}
+                        <img src="{{ game.cover.url }}" class="card-img-top">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ game.title }}</h5>
+                        <p class="card-text">{{ game.description|truncatechars:50 }}</p>
+                        <a href="#" class="btn btn-orange">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

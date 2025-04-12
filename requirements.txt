@@ -1,0 +1,9 @@
+Django>=4.2
+django-allauth
+python-dotenv
+requests
+beautifulsoup4
+PyJWT
+cryptography
+Pillow
+

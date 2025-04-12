@@ -1,0 +1,12 @@
+{% extends "infohub/base.html" %}
+
+{% block title %}Загрузить игру или приложение - InfoHub{% endblock %}
+
+{% block content %}
+    <h2>Загрузить игру или приложение</h2>
+    <form method="post" enctype="multipart/form-data" class="mt-3">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-orange w-100">Загрузить</button>
+    </form>
+{% endblock %}

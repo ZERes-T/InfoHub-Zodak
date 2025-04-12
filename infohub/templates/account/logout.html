@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Выход - InfoHub{% endblock %}
+
+{% block content %}
+<div class="container py-5 text-center">
+  <h2 class="mb-4">Выход из аккаунта</h2>
+  <p class="mb-4">Вы уверены, что хотите выйти?</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-orange px-4">🔒 Выйти</button>
+  </form>
+</div>
+{% endblock %}
