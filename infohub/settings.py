@@ -144,14 +144,15 @@ AUTHENTICATION_BACKENDS = (
 
 SITE_ID = 1
 
-ACCOUNT_EMAIL_VERIFICATION = "none"
+#ACCOUNT_EMAIL_VERIFICATION = "none"
 SOCIALACCOUNT_PROVIDERS = {
-    "google": {
-        "SCOPE": ["profile", "email"],
-        "AUTH_PARAMS": {"access_type": "online"},
-    },
-    "telegram": {},
-    "yandex": {},
+    'google': {
+        'SCOPE': ['profile', 'email'],
+        'AUTH_PARAMS': {'access_type': 'online'},
+        'OAUTH_PKCE_ENABLED': True,
+        'client_id': '1029199638211-5agqnn3kuupaik9000d49pp74hdec2f7.apps.googleusercontent.com',
+        'secret': 'В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',
+    }
 }
 
 LOGIN_REDIRECT_URL = "/"
@@ -161,17 +162,23 @@ ACCOUNT_LOGOUT_REDIRECT_URL = "/"
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'kek57566@gmail.com'
+EMAIL_HOST_PASSWORD = 'bowffdbbxknrhtbo'  # Лучше использовать пароль приложения
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # --- Modern allauth settings ---
 ACCOUNT_LOGIN_METHODS = {'username'}
 ACCOUNT_SIGNUP_FIELDS = ['email*', 'username*', 'password1*', 'password2*']
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
-ACCOUNT_EMAIL_REQUIRED = True
+#ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_LOGIN_ON_SIGNUP = False
 
 # --- Email backend for development ---
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-DEFAULT_FROM_EMAIL = 'noreply@infohub.local'
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#DEFAULT_FROM_EMAIL = 'noreply@infohub.local'
 
 X_FRAME_OPTIONS = "SAMEORIGIN"
 
