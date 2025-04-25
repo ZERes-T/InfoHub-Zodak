@@ -1,23 +1,19 @@
 {% extends "base.html" %}
-{% block title %}{{ game.title }} - InfoHub{% endblock %}
+{% block title %}{{ game.title }}{% endblock %}
 {% block content %}
-  <div class="row">
-    <div class="col-md-4">
-      {% if game.cover %}
-        <img src="{{ game.cover.url }}" class="img-fluid rounded shadow-sm" alt="{{ game.title }}">
-      {% endif %}
-    </div>
-    <div class="col-md-8">
-      <h2>{{ game.title }}</h2>
-      <p class="text-muted">Категория: {{ game.category }}</p>
-      <p>{{ game.description }}</p>
+  <div class="container py-4">
+    <h1 class="mb-3">{{ game.title }}</h1>
+    {% if game.cover %}
+      <img src="{{ game.cover.url }}" class="img-fluid mb-3" alt="{{ game.title }}">
+    {% endif %}
+    <p>{{ game.description }}</p>
 
-      {% if game.torrent_file %}
-        <a href="{{ game.torrent_file.url }}" class="btn btn-success">Скачать торрент</a>
-      {% endif %}
-      {% if game.direct_link %}
-        <a href="{{ game.direct_link }}" class="btn btn-outline-primary" target="_blank">Прямая ссылка</a>
-      {% endif %}
-    </div>
+    {% if game.direct_link %}
+      <a href="{{ game.direct_link }}" class="btn btn-primary">Скачать напрямую</a>
+    {% endif %}
+
+    {% if game.torrent_file %}
+      <a href="{{ game.torrent_file.url }}" class="btn btn-secondary">Скачать торрент</a>
+    {% endif %}
   </div>
 {% endblock %}

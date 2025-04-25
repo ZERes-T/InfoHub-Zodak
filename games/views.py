@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import get_user_model
 from .models import Game, Rating
 from .forms import GameForm
+from django.views.generic import DetailView
 
 User = get_user_model()
 
@@ -94,3 +95,9 @@ def home(request):
 def user_profile(request):
     user_games = Game.objects.filter(added_by=request.user)
     return render(request, "account/profile.html", {"user_games": user_games})
+
+
+class GameDetailView(DetailView):
+    model = Game
+    template_name = "games/game_detail.html"
+    context_object_name = "game"

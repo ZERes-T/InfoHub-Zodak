@@ -28,3 +28,6 @@
 {% block extra_head %}
 <link rel="stylesheet" href="{% static 'css/profile.css' %}">
 {% endblock %}
+{% if user.avatar %}
+  <img src="{{ user.avatar.url }}" style="max-width: 120px;">
+{% endif %}

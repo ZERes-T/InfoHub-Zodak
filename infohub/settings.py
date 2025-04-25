@@ -161,7 +161,7 @@ ACCOUNT_LOGOUT_REDIRECT_URL = "/"
 
 
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
@@ -189,3 +189,10 @@ SOCIALACCOUNT_PROVIDERS['google'].update({
         'key': ''
     }
 })
+
+# Кастомная модель пользователя
+AUTH_USER_MODEL = 'users.CustomUser'
+
+# Путь для хранения загружаемых файлов (аватары и т.д.)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
