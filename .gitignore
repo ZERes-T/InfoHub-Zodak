@@ -10,7 +10,7 @@ venv/
 # Django
 *.log
 staticfiles/
-media/
+
 
 # OS
 .DS_Store
