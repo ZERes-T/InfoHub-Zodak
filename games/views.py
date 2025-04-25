@@ -6,6 +6,8 @@ from .models import Game, Rating
 from .forms import GameForm
 from django.views.generic import DetailView
 
+
+
 User = get_user_model()
 
 def is_admin(user):
@@ -46,7 +48,7 @@ def edit_game(request, game_id):
     else:
         form = GameForm(instance=game)
 
-    return render(request, 'edit_game.html', {'form': form, 'game': game})
+    return render(request, 'games/edit_game.html', {'form': form, 'game': game})
 
 @login_required
 def delete_game(request, game_id):
@@ -80,9 +82,25 @@ def rate_game(request, game_id):
 
 def game_list(request):
     query = request.GET.get("q", "")
-    games = Game.objects.filter(title__icontains=query) if query else Game.objects.all()
-    return render(request, "games/game_list.html", {"games": games, "query": query})
+    category = request.GET.get("category", "")
 
+    games = Game.objects.all()
+
+    if query:
+        games = games.filter(title__icontains=query)
+
+    if category:
+        games = games.filter(category=category)
+
+    # Получаем все уникальные категории для меню
+    categories = Game.objects.values_list('category', flat=True).distinct()
+
+    return render(request, "games/game_list.html", {
+        "games": games,
+        "query": query,
+        "categories": categories,
+        "selected_category": category,
+    })
 def home(request):
     query = request.GET.get("q", "")
     if query:
@@ -101,3 +119,14 @@ class GameDetailView(DetailView):
     model = Game
     template_name = "games/game_detail.html"
     context_object_name = "game"
+
+from django.views.decorators.http import require_GET
+from django.template.loader import render_to_string
+
+@require_GET
+def ajax_search(request):
+    query = request.GET.get("q", "")
+    games = Game.objects.filter(title__icontains=query) if query else Game.objects.all()
+
+    html = render_to_string("games/includes/game_cards.html", {"games": games})
+    return JsonResponse({"html": html})

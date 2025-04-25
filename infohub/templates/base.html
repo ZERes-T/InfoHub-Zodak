@@ -105,6 +105,7 @@
     </a>
 
     <div class="ms-auto d-flex align-items-center gap-2">
+
       {% if user.is_authenticated %}
         <div class="dropdown">
           <button class="btn btn-outline-light dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
@@ -133,20 +134,34 @@
         <a href="{% url 'account_signup' %}" class="btn btn-orange">Регистрация</a>
       {% endif %}
 
+      <!-- Уведомления -->
+      {% if user.is_authenticated %}
+        <div style="position: relative; display: inline-block;">
+          <button class="btn btn-link text-light" data-bs-toggle="modal" data-bs-target="#notificationsModal">
+            🔔
+          </button>
+          {% if not user.email_confirmed %}
+            <span style="position: absolute; top: 0; right: 0; color: red;">•</span>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      <!-- Переключатель темы -->
       <button id="theme-toggle" class="btn btn-orange">🌙 Тема</button>
+
     </div>
   </div>
 </nav>
 
 <!-- 🔔 Flash messages -->
-{% if messages %}
-  <div class="container mt-3" id="message-container">
-    {% for message in messages %}
-      <div class="alert alert-{{ message.tags|default:'info' }} text-center" role="alert">
-        {{ message }}
-      </div>
-    {% endfor %}
-  </div>
+<!--{% if messages %}-->
+<!--  <div class="container mt-3" id="message-container">-->
+<!--    {% for message in messages %}-->
+<!--      <div class="alert alert-{{ message.tags|default:'info' }} text-center" role="alert">-->
+<!--        {{ message }}-->
+<!--      </div>-->
+<!--    {% endfor %}-->
+<!--  </div>-->
 
   <script>
     setTimeout(function () {
@@ -176,6 +191,56 @@
     document.body.classList.add("light-theme");
   }
 </script>
+
+<!-- Модальное окно уведомлений -->
+<div class="modal fade" id="notificationsModal" tabindex="-1" aria-labelledby="notificationsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content text-dark">
+      <div class="modal-header">
+        <h5 class="modal-title" id="notificationsModalLabel">Уведомления</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+      </div>
+      <div class="modal-body">
+        {% if not user.is_superuser and not user.email_confirmed %}
+          <div class="alert alert-warning">
+            Ваша почта не подтверждена. <br>
+            <a href="{% url 'confirm_email' %}" class="btn btn-sm btn-warning mt-2">Подтвердить сейчас</a>
+          </div>
+        {% else %}
+          <p class="text-success">Уведомлений нет 😊</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="alertModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content text-white bg-dark border-warning">
+      <div class="modal-header">
+        <h5 class="modal-title">Уведомление</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" id="alertModalBody">...</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const modal = new bootstrap.Modal(document.getElementById('alertModal'));
+    const body = document.getElementById('alertModalBody');
+
+    {% if messages %}
+      {% for message in messages %}
+        body.innerHTML = "{{ message|escapejs }}";
+        modal.show();
+        setTimeout(() => modal.hide(), 10000);
+      {% endfor %}
+    {% endif %}
+  });
+</script>
+
 
 </body>
 </html>

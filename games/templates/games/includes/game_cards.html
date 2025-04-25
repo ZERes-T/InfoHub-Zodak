@@ -1,0 +1,18 @@
+<div class="row row-cols-1 row-cols-md-3 g-4">
+  {% for game in games %}
+    <div class="col">
+      <div class="card h-100 shadow-sm bg-dark text-white">
+        {% if game.cover %}
+          <img src="{{ game.cover.url }}" class="card-img-top" style="height: 200px; object-fit: cover;" alt="{{ game.title }}">
+        {% endif %}
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">{{ game.title }}</h5>
+          <p class="card-text">{{ game.description|truncatechars:100 }}</p>
+          <a href="{% url 'game_detail' game.id %}" class="btn btn-outline-light mt-auto">Подробнее</a>
+        </div>
+      </div>
+    </div>
+  {% empty %}
+    <p class="text-muted text-center">😕 Нет доступных игр.</p>
+  {% endfor %}
+</div>

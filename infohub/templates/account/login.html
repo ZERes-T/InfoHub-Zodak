@@ -9,7 +9,7 @@
     <h2 class="text-center mb-3">Вход в InfoHub</h2>
 
     <!-- Основная форма входа -->
-    <form method="post">
+    <form method="post" id="login-form">
       {% csrf_token %}
       <div class="mb-3">
         <label class="form-label">Имя пользователя</label>
@@ -41,13 +41,38 @@
         <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/google.svg" width="20" height="20" style="margin-right: 8px;" alt="Google">
         Войти через Google
       </a>
-
-      <!-- Telegram login -->
-
-        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/telegram.svg" width="20" height="20" style="margin-right: 8px;" alt="Telegram">
-        Войти через Telegram
-      </a>
     </div>
   </div>
 </div>
 {% endblock %}
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("login-form");
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+
+    fetch("{% url 'account_login' %}", {
+      method: "POST",
+      headers: {
+        "X-Requested-With": "XMLHttpRequest",
+      },
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        window.location.href = data.redirect_url;
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('alertModal'));
+        const body = document.getElementById('alertModalBody');
+        body.innerHTML = data.error || "Ошибка входа";
+        modal.show();
+        setTimeout(() => modal.hide(), 10000);
+      }
+    });
+  });
+});
+</script>

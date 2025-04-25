@@ -6,6 +6,7 @@ beautifulsoup4
 PyJWT
 cryptography
 Pillow
+django-widget-tweaks
 
 
 

@@ -14,7 +14,8 @@ def home_redirect(request):
 urlpatterns = [
     path("feedback/", include("feedback.urls")),
     path("admin/", admin.site.urls),
-    path("accounts/", include("allauth.urls")),
+    path('users/', include('users.urls')),
+    path('accounts/', include('allauth.urls')),
     path("games/", include("games.urls")),
     path("", home, name="home"),
     path("profile/edit/", edit_profile, name="edit_profile"),

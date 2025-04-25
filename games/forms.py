@@ -6,4 +6,7 @@ from .models import Game, Rating
 class GameForm(forms.ModelForm):
     class Meta:
         model = Game
-        fields = ["title", "description", "cover", "torrent_file", "direct_link", "category"]
+        fields = [
+            "title", "description", "cover", "rating", "total_votes",
+            "favorites", "category", "direct_link", "torrent_file", "video_url"
+        ]

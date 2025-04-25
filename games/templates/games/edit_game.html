@@ -1,20 +1,57 @@
 {% extends "base.html" %}
+{% block title %}Редактировать игру — InfoHub{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1 class="text-center mt-4">Редактирование игры</h1>
+<div class="container py-5">
+  <h2 class="mb-4 text-center">🛠️ Редактирование игры</h2>
 
-    <div class="card bg-dark text-white shadow-sm mt-4">
-        <div class="card-header">
-            <h4>Изменить данные игры</h4>
+  <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+    {% csrf_token %}
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="mb-3">
+          {{ form.title.label_tag }} {{ form.title }}
         </div>
-        <div class="card-body">
-            <form method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit" class="btn btn-success w-100">Сохранить изменения</button>
-            </form>
+        <div class="mb-3">
+          {{ form.description.label_tag }} {{ form.description }}
         </div>
+        <div class="mb-3">
+          {{ form.category.label_tag }} {{ form.category }}
+        </div>
+        <div class="mb-3">
+          {{ form.direct_link.label_tag }} {{ form.direct_link }}
+        </div>
+        <div class="mb-3">
+          {{ form.torrent_file.label_tag }} {{ form.torrent_file }}
+        </div>
+        <div class="mb-3">
+          {{ form.video_url.label_tag }} {{ form.video_url }}
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        {% if game.cover %}
+          <p>Текущая обложка:</p>
+          <img src="{{ game.cover.url }}" class="img-fluid rounded mb-3" style="max-height: 200px;">
+        {% endif %}
+        <div class="mb-3">
+          {{ form.cover.label_tag }} {{ form.cover }}
+        </div>
+
+        <div class="mb-3">
+          {{ form.rating.label_tag }} {{ form.rating }}
+        </div>
+        <div class="mb-3">
+          {{ form.total_votes.label_tag }} {{ form.total_votes }}
+        </div>
+      </div>
     </div>
+
+    <div class="d-flex justify-content-between mt-4">
+      <a href="{% url 'admin_dashboard' %}" class="btn btn-secondary">Назад</a>
+      <button type="submit" class="btn btn-success">💾 Сохранить изменения</button>
+    </div>
+  </form>
 </div>
 {% endblock %}

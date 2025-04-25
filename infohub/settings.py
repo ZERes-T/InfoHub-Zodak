@@ -116,6 +116,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 INSTALLED_APPS = [
+    'widget_tweaks',
     "feedback",
     "django.contrib.admin",  # ✅ Должно быть здесь
     "django.contrib.auth",
@@ -162,19 +163,24 @@ ACCOUNT_LOGOUT_REDIRECT_URL = "/"
 
 
 
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'kek57566@gmail.com'
-EMAIL_HOST_PASSWORD = 'bowffdbbxknrhtbo'  # Лучше использовать пароль приложения
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'kek57566@gmail.com'
+# EMAIL_HOST_PASSWORD = 'bowffdbbxknrhtbo'  # Лучше использовать пароль приложения
+# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # --- Modern allauth settings ---
 ACCOUNT_LOGIN_METHODS = {'username'}
 ACCOUNT_SIGNUP_FIELDS = ['email*', 'username*', 'password1*', 'password2*']
-ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+#ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 #ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_LOGIN_ON_SIGNUP = False
+
+ACCOUNT_EMAIL_VERIFICATION = 'none'  # 🔒 отключаем стандартную проверку
+ACCOUNT_CONFIRM_EMAIL_ON_GET = False
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+ACCOUNT_EMAIL_REQUIRED = True
 
 # --- Email backend for development ---
 #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -196,3 +202,15 @@ AUTH_USER_MODEL = 'users.CustomUser'
 # Путь для хранения загружаемых файлов (аватары и т.д.)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'mail.infohub-zodak.ru'
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
+EMAIL_USE_TLS = False
+EMAIL_HOST_USER = 'zodak@infohub-zodak.ru'
+EMAIL_HOST_PASSWORD = 'aKEK9her9@@'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+import socket
+socket.getfqdn = lambda name=None: 'infohub-zodak.ru'
+
