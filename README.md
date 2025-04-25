@@ -18,8 +18,8 @@ InfoHub-Zodak — это Django-платформа для загрузки, пр
 ## 🔧 Установка
 
 ```bash
-git clone https://github.com/shimtuuu/info-hub-SHIMTU.git
-cd info-hub-SHIMTU
+git clone https://github.com/zinkin-kmept/exam-ZERes-T.git
+cd ./www/html/infohub-zodak.ru
 python -m venv venv
 source venv/bin/activate  # или venv\Scripts\activate на Windows
 pip install -r requirements.txt
@@ -39,7 +39,8 @@ python manage.py runserver
 
 ## ⚙️ Управление
 
-Админ-панель: [http://localhost:8000/admin/](http://localhost:8000/admin/)  
+Админ-панель: [http://localhost:8000/admin/](http://localhost:8000/admin/) 
+Админ-панель: [infohub-zodak.ru/admin](https://infohub-zodak.ru/admin)
 Создай суперпользователя:
 
 ```bash
